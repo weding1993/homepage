@@ -63,24 +63,24 @@
     });
   }
 
-  const vid = $("#hero-video"),
-    vbtn = $("#vid-toggle");
-  if (vid) {
-    const label = (playing) => {
-      vbtn.textContent = playing ? "일시정지" : "재생";
-      vbtn.setAttribute(
-        "aria-label",
-        playing ? "배경 영상 일시정지" : "배경 영상 재생",
-      );
-    };
-    vbtn.addEventListener("click", () => {
-      if (vid.paused) vid.play().catch(() => {});
-      else vid.pause();
-      label(!vid.paused);
-    });
-    vid.addEventListener("error", () => (vbtn.hidden = true), true);
-    vid.play?.().catch(() => label(false));
-  }
+  // const vid = $("#hero-video"),
+  //   vbtn = $("#vid-toggle");
+  // if (vid) {
+  //   const label = (playing) => {
+  //     vbtn.textContent = playing ? "일시정지" : "재생";
+  //     vbtn.setAttribute(
+  //       "aria-label",
+  //       playing ? "배경 영상 일시정지" : "배경 영상 재생",
+  //     );
+  //   };
+  //   vbtn.addEventListener("click", () => {
+  //     if (vid.paused) vid.play().catch(() => {});
+  //     else vid.pause();
+  //     label(!vid.paused);
+  //   });
+  //   vid.addEventListener("error", () => (vbtn.hidden = true), true);
+  //   vid.play?.().catch(() => label(false));
+  // }
 
   // 포트폴리오: 데이터가 있을 때만 표시
   const list = Array.isArray(cfg.portfolio) ? cfg.portfolio : [];
@@ -102,13 +102,70 @@
       .map(
         (p) => `
       <article class="card pf">
-        ${p.image ? `<img src="${esc(p.image)}" alt="${esc(p.imageAlt || p.title)}" loading="lazy">` : ""}
-        <small>${esc(p.client)} · ${esc(p.category)}</small>
-        <h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>
-        ${(p.tasks || []).length ? `<p>진행 업무: ${p.tasks.map(esc).join(", ")}</p>` : ""}
-        ${(p.results || []).length ? `<p>성과: ${p.results.map(esc).join(", ")}</p>` : ""}
-        ${p.link ? `<a class="more" href="${esc(p.link)}">자세히 보기</a>` : ""}
-      </article>`,
+        ${
+          p.image
+            ? `
+              <div class="pf-image">
+                <img
+                  src="${esc(p.image)}"
+                  alt="${esc(p.imageAlt || p.title)}"
+                  loading="lazy"
+                >
+              </div>
+            `
+            : ""
+        }
+        <div class="pf-content">
+          <div class="pf-meta">
+            <span>${esc(p.client)}</span>
+            <span class="pf-meta-dot"></span>
+            <span>${esc(p.category)}</span>
+          </div>
+          <h3 class="pf-title">${esc(p.title)}</h3>
+          <p class="pf-description">
+            ${esc(p.description)}
+          </p>
+          ${
+            (p.tasks || []).length
+              ? `
+                <div class="pf-section">
+                  <span class="pf-label">진행 업무</span>
+                  <div class="pf-tags">
+                    ${p.tasks
+                      .map((task) => `<span class="pf-tag">${esc(task)}</span>`)
+                      .join("")}
+                  </div>
+                </div>
+              `
+              : ""
+          }
+          ${
+            (p.results || []).length
+              ? `
+                <div class="pf-results">
+                  <span class="pf-label">프로젝트 성과</span>
+                  <ul>
+                    ${p.results
+                      .map((result) => `<li>${esc(result)}</li>`)
+                      .join("")}
+                  </ul>
+                </div>
+              `
+              : ""
+          }
+          ${
+            p.link
+              ? `
+                <a class="pf-link" href="${esc(p.link)}">
+                  프로젝트 자세히 보기
+                  <span aria-hidden="true">↗</span>
+                </a>
+              `
+              : ""
+          }
+        </div>
+      </article>
+    `,
       )
       .join("");
     $("#portfolio").hidden = false;
