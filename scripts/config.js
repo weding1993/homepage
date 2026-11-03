@@ -30,5 +30,17 @@ window.SITE_CONFIG = {
         "제품 실사 기반의 시각 콘텐츠 및 상세페이지 제작",
       ],
     },
+    {
+      title: "레이나 와디즈 선풍기 런칭 콘텐츠 제작",
+      client: "레이나",
+      category: "콘텐츠 제작",
+      image: "assets/portfolio/portfolio-03.jpeg",
+      imageAlt: "레이나 와디즈 선풍기 런칭 상세페이지 및 제품 콘텐츠 제작",
+      tasks: ["제품 촬영", "카피라이팅", "GIF 제작", "상세페이지 디자인"],
+      results: [
+        "GIF와 그래픽을 활용한 제품 기능 시각화",
+        "와디즈 펀딩용 상세페이지 제작 완료",
+      ],
+    },
   ],
 };
